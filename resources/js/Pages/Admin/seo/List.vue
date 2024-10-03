@@ -71,9 +71,10 @@
                       <div
                         v-for="item in Distance"
                         :key="item.value"
-                        class="d-flex-col align-items-center py-2"
+                        class="d-flex-col d-flex align-items-center py-2 customInputCheckBox"
                       >
                         <input
+                       :style="{ height: '16px' , width : '16px' }"
                           type="checkbox"
                           :id="`checkbox-${item.value}`"
                           :v-model="`checkbox-${item.value}`"
@@ -265,7 +266,7 @@
                             @click="search"
                           >
                             <span class='d-flex'>
-                              <i class="la la-search"></i>
+                              <i :style="{ position : 'relative' , top : '9px'}" class="la la-search"></i>
                               <span>Search</span>
                             </span>
                           </button>
@@ -401,12 +402,12 @@ import perPageDropdown from "@/components/PerpageDropdown.vue";
 
 const props = defineProps({
   seopages: Object,
-  locationsSelected : Array | null,
-  distanceSelected : Array | null,
+  locationsSelected: Array | null,
+  distanceSelected: Array | null,
 });
 
-  const customDistance = ref("");
-  let seoIds = ref([]);
+const customDistance = ref("");
+let seoIds = ref([]);
 
 let locations = props.locationsSelected ? props.locationsSelected : [];
 console.log('location123', locations)
@@ -414,7 +415,7 @@ let distance = props.distanceSelected ? props.distanceSelected : [];
 const actions = ref('')
 
 const geoMap = [
-{ label: "Alabama", value: "alabama", longitude: -86.902298, latitude: 32.318231 },
+  { label: "Alabama", value: "alabama", longitude: -86.902298, latitude: 32.318231 },
   { label: "Alaska", value: "alaska", longitude: -149.493673, latitude: 64.200841 },
   { label: "Arizona", value: "arizona", longitude: -111.093731, latitude: 34.048928 },
   { label: "Arkansas", value: "arkansas", longitude: -92.373123, latitude: 35.20105 },
@@ -519,7 +520,7 @@ function arrayToSearchParams(key, array) {
 //   locations = locations.includes(newLocation)
 //     ? locations.filter((item) => item !== newLocation)
 //     : [...locations, newLocation];
-    
+
 //   router.visit(route("admin.seo.pages"), {
 //     method: "get",
 //     data: {
@@ -542,7 +543,7 @@ function arrayToSearchParams(key, array) {
 //     customDistance.value = newDistance; 
 //     return;
 //   }
-    
+
 //   router.visit(route("admin.seo.pages"), {
 //     method: "get",
 //     data: {
@@ -584,17 +585,17 @@ const sendRequest = () => {
   if (locations && locations.length > 0) {
     const filteredCoordinates = geoMap
       .filter(location => locations.includes(location.value))
-      .map(location => location.value+"|"+location.longitude+'|'+location.latitude );
+      .map(location => location.value + "|" + location.longitude + '|' + location.latitude);
 
-    console.log({filteredCoordinates})
+    console.log({ filteredCoordinates })
     requestData.locations = locations;
-    requestData.filteredCoordinates = filteredCoordinates; 
-}
+    requestData.filteredCoordinates = filteredCoordinates;
+  }
 
   if (distance !== null && distance !== undefined) {
     requestData.distance = distance;
   }
-  console.log({requestData})
+  console.log({ requestData })
 
   if (Object.keys(requestData).length > 0) {
     router.visit(route("admin.seo.pages"), {
@@ -607,7 +608,7 @@ const sendRequest = () => {
 
 const onChangeActions = (newAction) => {
   actions.value = newAction
-    
+
   // router.visit(route("admin.seo.pages"), {
   //   method: "get",
   //   data: {
@@ -625,7 +626,7 @@ const onChangeSeoSelect = (id) => {
   }
 };
 const onChangeTableSelect = () => {
-  if(seoIds.value.length === props?.seopages?.data.length) {
+  if (seoIds.value.length === props?.seopages?.data.length) {
     seoIds.value = []
   } else {
     seoIds.value = props?.seopages?.data.map(seo => seo.id);
@@ -639,7 +640,7 @@ const onApplyClick = () => {
     id: seoIds.value.join(','), // Send comma-separated values
     action: actions.value,
   };
-  
+
   router.post(route("admin.changeSeoStatus"), data);
   seoIds.value = []; // Reset the state after submission
   actions.value = ''

@@ -11,7 +11,7 @@
           <div class="col-lg-12">
             <div class="form-group validated row">
               <div class="col-lg-12 mt-2 seo-edit">
-                <h4>Seo Settings: </h4>
+                <h4>Seo Settings:</h4>
               </div>
             </div>
           </div>
@@ -75,7 +75,6 @@
                     class="form-control border-gray-200"
                     placeholder="Enter Question"
                   />
-                  
                   <span
                     class="text-danger"
                     v-if="form.errors['faqs.' + k + '.question']"
@@ -352,7 +351,7 @@ const form = useForm({
   ],
   slug: props.seo?.slug || "",
   meta_title: props.seo?.meta_title || "",
-  meta_description: props.seo?.meta_description || "hi",
+  meta_description: props.seo?.meta_description || "",
   status: props.seo?.status || "",
   p_tag: props.seo?.p_tag || "",
   h1_tag: props.seo?.h1_tag || "",

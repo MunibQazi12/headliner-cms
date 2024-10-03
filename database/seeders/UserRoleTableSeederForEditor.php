@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
-class UserRoleTableSeeder extends Seeder
+class UserRoleTableSeederForEditor extends Seeder
 {
     /**
      * Run the database seeds.

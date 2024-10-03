@@ -1,0 +1,1062 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Emory",
+        "description": "http://127.0.0.1:8000/api",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth Management"
+                ],
+                "summary": "User Register",
+                "description": "User Register here",
+                "operationId": "Register",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "full_name",
+                                    "email",
+                                    "phone",
+                                    "company",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "full_name": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "example": ""
+                                    },
+                                    "phone": {
+                                        "type": "integer",
+                                        "example": ""
+                                    },
+                                    "company": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "example": ""
+                                    },
+                                    "password_confirmation": {
+                                        "type": "password",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register Successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth Management"
+                ],
+                "summary": "User Login (login with email)",
+                "description": "Login User Here (login with email)",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": ""
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/forget-password-send-otp": {
+            "post": {
+                "tags": [
+                    "Auth Management"
+                ],
+                "summary": "Forget password send otp",
+                "description": "Forget password send otp Here",
+                "operationId": "Send otp",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "otp send Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/forget-password-verify-otp": {
+            "post": {
+                "tags": [
+                    "Auth Management"
+                ],
+                "summary": "Forget password verify otp",
+                "description": "Forget password verify otp Here",
+                "operationId": "Verify otp",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": ""
+                                    },
+                                    "otp": {
+                                        "description": "OTP will 60 second valid",
+                                        "type": "integer",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "verify otp Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/change-password": {
+            "post": {
+                "tags": [
+                    "Auth Management"
+                ],
+                "summary": "Change Password",
+                "description": " Change Password Here",
+                "operationId": "Change Password",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": ""
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "example": ""
+                                    },
+                                    "confirm_password": {
+                                        "type": "password",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Change Password Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/get-dry-ice-pallet/{id}": {
+            "get": {
+                "tags": [
+                    "Cart Management"
+                ],
+                "summary": "Get add to cart page",
+                "description": "Dry Ice Pallet page ",
+                "operationId": "dry-ice-pallet",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Address Deleted Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/view-cart": {
+            "post": {
+                "tags": [
+                    "Cart Management"
+                ],
+                "summary": "view-cart",
+                "description": "view-cart",
+                "operationId": "view-cart",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "per_page": {
+                                        "type": "numeric",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data Fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/get/{slug}/cms": {
+            "get": {
+                "tags": [
+                    "Cms Management"
+                ],
+                "summary": "Get cms pages by slug",
+                "description": "Get cms pages by slug",
+                "operationId": "Api Cms Management",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "cms slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Page fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/get-faq": {
+            "get": {
+                "tags": [
+                    "Cms Management"
+                ],
+                "summary": "Api For Get Faq",
+                "description": "Api For Get Faq",
+                "operationId": "Faq",
+                "responses": {
+                    "200": {
+                        "description": "Data fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dry-ice-page": {
+            "get": {
+                "tags": [
+                    "Cms Management"
+                ],
+                "summary": "Api Dry_ice page",
+                "description": "Api for  Dry_ice page",
+                "operationId": "dry-ice-page",
+                "responses": {
+                    "200": {
+                        "description": "Data fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/category-list": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Category list Fetch",
+                "description": "Get Category list ",
+                "operationId": "Category list",
+                "responses": {
+                    "201": {
+                        "description": "Category list retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/industry-list": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Industry list Fetch",
+                "description": "Get Industry list ",
+                "operationId": "Industry list",
+                "responses": {
+                    "201": {
+                        "description": "Industry list retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/choose-for-list": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Choose for list Fetch",
+                "description": "Get Choose for list ",
+                "operationId": "Choose for list",
+                "responses": {
+                    "201": {
+                        "description": "Choose for list retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/testimonials": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Testimonial list Fetch",
+                "description": "Get Testimonial list ",
+                "operationId": "Testimonial list",
+                "responses": {
+                    "201": {
+                        "description": "Testimonial list retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/distribution-center-list": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Distribution Center list Fetch",
+                "description": "Get Distribution Center list ",
+                "operationId": "Distribution Center list",
+                "responses": {
+                    "201": {
+                        "description": "Distribution Center list retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/home-page": {
+            "get": {
+                "tags": [
+                    "Home Management"
+                ],
+                "summary": "Home Page",
+                "description": "Home Page ",
+                "operationId": "home-page",
+                "responses": {
+                    "201": {
+                        "description": "data fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/resources": {
+            "get": {
+                "tags": [
+                    "Resource Management"
+                ],
+                "summary": "Resource Management",
+                "description": " Get all resource",
+                "operationId": "Resources",
+                "responses": {
+                    "200": {
+                        "description": "Data fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/resource/{id}/details": {
+            "get": {
+                "tags": [
+                    "Resource Management"
+                ],
+                "summary": "Get details of particular resource",
+                "description": "Get Get details of particular resource",
+                "operationId": "Resource",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "resource id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details fetched",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/my-profile": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "User Details Fetch",
+                "description": "Get User Details ",
+                "operationId": "User Details",
+                "responses": {
+                    "201": {
+                        "description": "User retrieve Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/personal-details-update": {
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Personal Details Update",
+                "description": " Personal Details Update Here",
+                "operationId": "Personal Details Update",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "full_name",
+                                    "email",
+                                    "phone",
+                                    "company"
+                                ],
+                                "properties": {
+                                    "full_name": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "email": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "phone": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "company": {
+                                        "type": "String",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Personal Details update Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/update-password": {
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Update update password",
+                "description": "Update password here",
+                "operationId": "Update update password",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "old_password",
+                                    "password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "old_password": {
+                                        "type": "password",
+                                        "example": ""
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "example": ""
+                                    },
+                                    "confirm_password": {
+                                        "type": "password",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password has been updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/add-address/{address_id?}": {
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "saved user address here",
+                "description": "saved user address here here",
+                "operationId": "saved user address here",
+                "parameters": [
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "address_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "country_code",
+                                    "address_line_1",
+                                    "pin_code",
+                                    "country",
+                                    "city",
+                                    "is_default"
+                                ],
+                                "properties": {
+                                    "country_code": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "address_line_1": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "address_line_2": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "pin_code": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "country": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "city": {
+                                        "type": "String",
+                                        "example": ""
+                                    },
+                                    "is_default": {
+                                        "type": "integer",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Address saved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/get-address": {
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get address list",
+                "description": "Get address list",
+                "operationId": "Get address list",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "page",
+                                    "per_page"
+                                ],
+                                "properties": {
+                                    "page": {
+                                        "type": "numeric",
+                                        "example": ""
+                                    },
+                                    "per_page": {
+                                        "type": "numeric",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Get address list Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/delete-address/{address_id}": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "User address deleted",
+                "description": "Get User address deleted ",
+                "operationId": "User address deleted",
+                "parameters": [
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "address_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Address Deleted Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Laravel Sanctum token authentication",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

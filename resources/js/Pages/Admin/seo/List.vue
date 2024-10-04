@@ -74,12 +74,12 @@
                         class="d-flex-col d-flex align-items-center py-2 customInputCheckBox"
                       >
                         <input
-                       :style="{ height: '16px' , width : '16px' }"
+                          :style="{ height: '16px' , width : '16px' }"
                           type="checkbox"
                           :id="`checkbox-${item.value}`"
                           :v-model="`checkbox-${item.value}`"
                           :name="`checkbox-${item.value}`"
-                          :checked="distance.includes(item.value)"
+                          :checked="distance === item.value"
                           @change="onChangeDistance(item.value)"
                           :value="item.value"
                         />
@@ -109,6 +109,7 @@
                     </button>
                     <button
                       class="btn btn-brand kt-btn btn-sm cmnBtnTw"
+                      :disabled="!customDistance"
                      @click="onChangeDistance('')"
                      :style="{ width:'45%' }"
                     >
@@ -410,8 +411,8 @@ const customDistance = ref("");
 let seoIds = ref([]);
 
 let locations = props.locationsSelected ? props.locationsSelected : [];
-console.log('location123', locations)
-let distance = props.distanceSelected ? props.distanceSelected : [];
+let distance = props.distanceSelected ? props.distanceSelected : '';
+
 const actions = ref('')
 
 const geoMap = [
@@ -472,6 +473,9 @@ const Distance = [
   { label: "250 Miles", value: "250" },
   { label: "300 Miles", value: "300" },
 ];
+
+customDistance.value = Distance.some((dis) => dis.value === distance) ? '' : distance;
+
 
 
 let params = new URLSearchParams(window.location.search);
@@ -563,18 +567,10 @@ const onChangeLocation = (newLocation) => {
 
 const onChangeDistance = (newDistance) => {
   if (newDistance && distance === newDistance) {
-    router.visit(route("admin.seo.pages"), {
-      method: "get",
-      replace: true,
-    });
-    return;
-  }
+    distance = '';
+  } else {
+    distance = newDistance;
 
-  distance = newDistance;
-
-  if (!newDistance) {
-    customDistance.value = newDistance;
-    return;
   }
   sendRequest();
 };
@@ -587,7 +583,6 @@ const sendRequest = () => {
       .filter(location => locations.includes(location.value))
       .map(location => location.value + "|" + location.longitude + '|' + location.latitude);
 
-    console.log({ filteredCoordinates })
     requestData.locations = locations;
     requestData.filteredCoordinates = filteredCoordinates;
   }
@@ -595,7 +590,6 @@ const sendRequest = () => {
   if (distance !== null && distance !== undefined) {
     requestData.distance = distance;
   }
-  console.log({ requestData })
 
   if (Object.keys(requestData).length > 0) {
     router.visit(route("admin.seo.pages"), {
@@ -608,14 +602,6 @@ const sendRequest = () => {
 
 const onChangeActions = (newAction) => {
   actions.value = newAction
-
-  // router.visit(route("admin.seo.pages"), {
-  //   method: "get",
-  //   data: {
-  //     actions :  actions
-  //   },
-  //   replace: true,
-  // });
 };
 
 const onChangeSeoSelect = (id) => {

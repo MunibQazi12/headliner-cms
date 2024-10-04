@@ -34,30 +34,43 @@ class SeoController extends Controller
             }
             
             if ($request->distance && $request->filteredCoordinates) {
-                $distance = $request->distance;
+                $distance = (int)$request->distance;
                 
                 foreach ($request->filteredCoordinates as $coordinate) {
                     $arr = explode('|', $coordinate);
-                    Log::info($arr);
+                    Log::info($arr);                    
                     
                     if (count($arr) === 3) { 
                         $cityName = $arr[0];   // City name (if needed for later use)
-                        $latitude = $arr[1];   // Latitude
-                        $longitude = $arr[2];  // Longitude
+                        $longitude = (float)$arr[1];   // Longitude
+                        $latitude = (float)$arr[2];  // Latitude
+
+                        
             
-                        // Apply Haversine formula for distance filtering
-                        $seopages->orWhereRaw("
-                            (3959 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) < ?
+                    //     Apply Haversine formula for distance filtering
+                  
+                    //  $seopages->selectRaw("*,( 3959 * acos( cos( radians(?) ) *
+                    //     cos( radians( latitude ) )
+                    //     * cos( radians( longitude ) - radians(?)
+                    //     ) + sin( radians(?) ) *
+                    //     sin( radians( latitude ) ) )
+                    //   ) AS distance", [$latitude, $longitude, $latitude])
+                    //    ->havingRaw("distance < ?", [$distance]);
+
+
+                        $seopages->orHavingRaw("
+                            ( 3959 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin(radians(?) ) * sin( radians( latitude ) ) )) < ?
                         ", [
                             $latitude,         
                             $longitude,         
                             $latitude,         
                             $distance           
                         ]);
+
                     }
                 }
             }
-
+            
             $perPage = $request->perPage ?? 20;
 
             $seopages = $seopages

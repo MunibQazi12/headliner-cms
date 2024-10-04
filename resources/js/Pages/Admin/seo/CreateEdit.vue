@@ -352,7 +352,7 @@ const form = useForm({
   slug: props.seo?.slug || "",
   meta_title: props.seo?.meta_title || "",
   meta_description: props.seo?.meta_description || "",
-  status: props.seo?.status || "",
+  status: props.seo?.status ?? "",
   p_tag: props.seo?.p_tag || "",
   h1_tag: props.seo?.h1_tag || "",
   h2_tag: props.seo?.h2_tag || "",

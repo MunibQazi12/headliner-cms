@@ -239,6 +239,7 @@
                   <tr class="filter">
                     <th :style="{ width: '5%' , textAlign:'center' , verticalAlign:'middle' }">
                       <input
+                          :style="{ height: '16px' , width : '16px' , marginLeft :'auto' , marginRight : 'auto' }"
                           type="checkbox"
                           :id="`SEO`"
                           :checked=" props?.seopages.data.length &&  seoIds.length === props?.seopages?.data.length"
@@ -296,6 +297,7 @@
                   >
                   <td :style="{ width: '5%' , textAlign:'center' , verticalAlign:'middle' }">
                     <input
+                          :style="{ height: '16px' , width : '16px' , marginLeft :'auto' , marginRight : 'auto' }"
                           type="checkbox"
                           :id="`${seo.id}`"
                           :name="`checkbox-${seo.id}`"

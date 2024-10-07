@@ -59,12 +59,13 @@
             </div>
 
             <div class="scr_footer">
+              
+              <button type="submit" class="btn" :disabled="form.processing" style="margin:15px 0">
+                Login
+              </button>
               <Link :href="route('admin.forgotPassword')"
                 >Forgot Password?</Link
               >
-              <button type="submit" class="btn" :disabled="form.processing">
-                Login
-              </button>
             </div>
           </form>
         </div>

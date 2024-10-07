@@ -6,6 +6,7 @@ use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\SEOFAQ;
 use App\Models\SeoSetting;
+use App\Models\DistributionCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -17,6 +18,7 @@ class SeoController extends Controller
     {
 
         try {
+            $distributor = DistributionCenter::query();
 
             $seopages = SeoSetting::query();
 
@@ -38,7 +40,7 @@ class SeoController extends Controller
                 
                 foreach ($request->filteredCoordinates as $coordinate) {
                     $arr = explode('|', $coordinate);
-                    Log::info($arr);                    
+                    Log::info($arr);
                     
                     if (count($arr) === 3) { 
                         $cityName = $arr[0];   // City name (if needed for later use)
@@ -66,22 +68,33 @@ class SeoController extends Controller
                             $latitude,         
                             $distance           
                         ]);
-
                     }
                 }
             }
-            
+
             $perPage = $request->perPage ?? 20;
 
-            $seopages = $seopages
-                ->orderBy('id', 'desc')
+            // $seopages = $seopages
+            //     ->orderBy('id', 'desc')
+            //     ->paginate($perPage)
+            //     ->withQueryString();
+            
+            if($request->fieldName && $request->shortBy) {
+                $seopages = $seopages
+                ->orderBy($request->fieldName, $request->shortBy)
                 ->paginate($perPage)
                 ->withQueryString();
-            
+            } else {
+                $seopages = $seopages
+                ->orderBy('meta_title','asc')
+                ->paginate($perPage)
+                ->withQueryString();
+            }
     
             $locationsSelected = $request->locations;
             $distanceSelected = $request->distance;
-            return Inertia::render('Admin/seo/List', compact('seopages' , 'locationsSelected', 'distanceSelected' ));
+            $distributions = $distributor->orderBy('id', 'desc')->paginate($perPage)->withQueryString();
+            return Inertia::render('Admin/seo/List', compact('seopages' , 'locationsSelected', 'distanceSelected', 'distributions' ));
         } catch (\Throwable $th) {
             Log::error(" :: EXCEPTION :: " . $th->getMessage() . "\n" . $th->getTraceAsString());
             abort(500);

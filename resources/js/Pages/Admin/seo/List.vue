@@ -90,6 +90,23 @@
                           {{ item.label }}
                         </a>
                       </div>
+                      <!-- <div
+                        v-for="item in props?.distributions?.data"
+                        :key="item.center_name"
+                        class="d-flex align-items-center py-2 col-3"
+                      >
+                        <input
+                          type="checkbox"
+                          :id="`checkbox-${item.center_name}`"
+                          
+                        />
+                        <a
+                          @click="onChangeLocation(item)"
+                          class="ml-2 kmenuLinkText"
+                        >
+                          {{ item.center_name }}
+                        </a>
+                      </div> -->
                       <div   
                       :style="{ marginTop: '10px' , marginBottom : '20px' }">
                         Custom Distance
@@ -407,6 +424,7 @@ const props = defineProps({
   seopages: Object,
   locationsSelected: Array | null,
   distanceSelected: Array | null,
+  distributions: Object,
 });
 
 const customDistance = ref("");

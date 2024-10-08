@@ -81,11 +81,11 @@
                     Distribution Center
                   </div>
                   <div
-                    class="dropdown-menu p-3 d-block"
+                    class="dropdown-menu p-3 d-block "
                     
-                    :style="{ width: '160px' }"
+                    :style="{ width: '160px', maxHeight: '180px', overflow: 'auto'}"
                   >
-                  <div class="row justify-content-between">
+                  <div class="row d-block">
                       <div
                         v-for="item in props?.distributions?.data"
                         :key="item.center_name"

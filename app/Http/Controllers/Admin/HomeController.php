@@ -32,7 +32,8 @@ class HomeController extends Controller
 
         if (Auth::attempt($credentials) && (Auth::user()->role_name == 'SUPER-ADMIN' || Auth::user()->role_name == 'EDITOR') ) {
             $request->session()->regenerate();
-            return Auth::user()->role_name == 'SUPER-ADMIN' ? redirect(session()->pull('url.intended', '/admin/dashboard')) : redirect(session()->pull('url.intended', '/admin/resource-list'));
+            // return Auth::user()->role_name == 'SUPER-ADMIN' ? redirect(session()->pull('url.intended', '/admin/dashboard')) : redirect(session()->pull('url.intended', '/admin/resource-list'));
+            return Auth::user()->role_name == 'SUPER-ADMIN' ? redirect()->to('/admin/dashboard') : redirect()->to('/admin/resource-list');
         }
 
         return back()->withErrors([

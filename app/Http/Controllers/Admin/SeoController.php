@@ -93,8 +93,9 @@ class SeoController extends Controller
     
             $locationsSelected = $request->locations;
             $distanceSelected = $request->distance;
+            $coordinates = $request->filteredCoordinates;
             $distributions = $distributor->orderBy('id', 'desc')->paginate($perPage)->withQueryString();
-            return Inertia::render('Admin/seo/List', compact('seopages' , 'locationsSelected', 'distanceSelected', 'distributions' ));
+            return Inertia::render('Admin/seo/List', compact('seopages' , 'locationsSelected', 'distanceSelected', 'distributions', 'coordinates' ));
         } catch (\Throwable $th) {
             Log::error(" :: EXCEPTION :: " . $th->getMessage() . "\n" . $th->getTraceAsString());
             abort(500);

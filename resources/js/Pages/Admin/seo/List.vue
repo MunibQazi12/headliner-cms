@@ -53,12 +53,13 @@
               </div>
 
               <div class="mb-2 ml-4">
-                <div class="dropdown">
+                <div class="dropdown ">
                   <div
                     class="btn border border-secondary dropdown-toggle"
                     type="button"
                     data-toggle="dropdown"
                     aria-expanded="false"
+                    @click="closeDistribution"
                   >
                     Distance
                   </div>
@@ -67,7 +68,95 @@
                     @click.stop
                     :style="{ width: '200px' }"
                   >
-                    <div class="">
+
+                <div class="mb-2">
+                <div v-if ="isDistributionClick" class="dropdown  dropdownOpen"  >
+                  <div
+                    class="btn border border-secondary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                    @click="handleDistributionClick"
+                  >
+                    Distribution Center
+                  </div>
+                  <div
+                    class="dropdown-menu p-3 d-block"
+                    
+                    :style="{ width: '160px' }"
+                  >
+                  <div class="row justify-content-between">
+                      <div
+                        v-for="item in props?.distributions?.data"
+                        :key="item.center_name"
+                          class="d-flex align-items-center py-2 px-2 w-50 "
+                      >
+                        <input
+                          type="checkbox"
+                          :id="`checkbox-${item.center_name}`"
+                          :v-model="`checkbox-${center_name}`"
+                          :name="`checkbox-${center_name}`"
+                          :checked="coordinates.some(coordinate => coordinate.includes(item.center_name))"
+                          @change="onChangeDistributionCenter(item)"
+                          :value="item.center_name"
+                          
+                        />
+                        <a
+                          @click="onChangeDistributionCenter(item)"
+                          class="ml-2 kmenuLinkText"
+                        >
+                          {{ item.center_name }}
+                        </a>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+                <div v-else class="dropdown  "  >
+                  <div
+                    class="btn border border-secondary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                    @click="handleDistributionClick"
+                  >
+                    Distribution Center
+                  </div>
+                  <div
+                    class="dropdown-menu p-3"
+                    
+                    :style="{ width: '800px' }"
+                  >
+                    <div class="row">
+                      <div
+                        v-for="item in props?.distributions?.data"
+                        :key="item.center_name"
+                        class="d-flex align-items-center py-2 col-3"
+                      >
+                        <input
+                          type="checkbox"
+                          :id="`checkbox-${item.center_name}`"
+                          :v-model="`checkbox-${center_name}`"
+                          :name="`checkbox-${center_name}`"
+                          :checked="coordinates.some(coordinate => coordinate.includes(item.center_name))"
+                          @change="onChangeDistributionCenter(item)"
+                          :value="item.center_name"
+                          
+                        />
+                        <a
+                          @click="onChangeDistributionCenter(item)"
+                          class="ml-2 kmenuLinkText"
+                        >
+                          {{ item.center_name }}
+                        </a>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+             
+                    <div class="" @click="closeDistribution">
                       <div
                         v-for="item in Distance"
                         :key="item.value"
@@ -90,23 +179,14 @@
                           {{ item.label }}
                         </a>
                       </div>
-                      <!-- <div
-                        v-for="item in props?.distributions?.data"
-                        :key="item.center_name"
-                        class="d-flex align-items-center py-2 col-3"
-                      >
-                        <input
-                          type="checkbox"
-                          :id="`checkbox-${item.center_name}`"
-                          
-                        />
-                        <a
-                          @click="onChangeLocation(item)"
-                          class="ml-2 kmenuLinkText"
-                        >
-                          {{ item.center_name }}
-                        </a>
-                      </div> -->
+
+
+                      <div class="mb-2 ml-4">
+               
+              </div>
+
+              
+                      
                       <div   
                       :style="{ marginTop: '10px' , marginBottom : '20px' }">
                         Custom Distance
@@ -425,13 +505,21 @@ const props = defineProps({
   locationsSelected: Array | null,
   distanceSelected: Array | null,
   distributions: Object,
+  coordinates: Array | null,
 });
 
 const customDistance = ref("");
 let seoIds = ref([]);
 
+let isDistributionClick = ref(false);
+
 let locations = props.locationsSelected ? props.locationsSelected : [];
 let distance = props.distanceSelected ? props.distanceSelected : '';
+
+let coordinates = props.coordinates ? props.coordinates : [];
+let distanceProps = props.distanceSelected ? props.distanceSelected : '';
+
+let coordinatesProps = props.coordinates ? props.coordinates : [];
 
 const actions = ref('')
 
@@ -527,6 +615,19 @@ const resetSearch = () => {
   });
 };
 
+const handleDistributionClick = () => {
+  // This method will be called when the button is clicked
+
+  isDistributionClick.value = isDistributionClick.value === true ? false : true
+  // alert('Button was clicked!');
+}
+const closeDistribution = () => {
+  // This method will be called when the button is clicked
+
+  isDistributionClick.value = false
+  // alert('Button was clicked!');
+}
+
 const form = useForm({
   searchName: params.get("page") || "",
 });
@@ -540,19 +641,19 @@ function arrayToSearchParams(key, array) {
   return params;
 }
 
-// const onChangeLocation = (newLocation) => {
-//   locations = locations.includes(newLocation)
-//     ? locations.filter((item) => item !== newLocation)
-//     : [...locations, newLocation];
+const onChangeLocation = (newLocation) => {
+  locations = locations.includes(newLocation)
+    ? locations.filter((item) => item !== newLocation)
+    : [...locations, newLocation];
 
-//   router.visit(route("admin.seo.pages"), {
-//     method: "get",
-//     data: {
-//       locations :  locations
-//     },
-//     replace: true,
-//   });
-// };
+  router.visit(route("admin.seo.pages"), {
+    method: "get",
+    data: {
+      locations :  locations
+    },
+    replace: true,
+  });
+};
 
 // const onChangeDistance = (newDistance) => {
 //   if(newDistance && distance === newDistance) {
@@ -577,10 +678,25 @@ function arrayToSearchParams(key, array) {
 //   });
 // };
 
-const onChangeLocation = (newLocation) => {
-  locations = locations.includes(newLocation)
-    ? locations.filter((item) => item !== newLocation)
-    : [...locations, newLocation];
+// const onChangeLocation = (newLocation) => {
+//   locations = locations.includes(newLocation)
+//     ? locations.filter((item) => item !== newLocation)
+//     : [...locations, newLocation];
+
+//   sendRequest();
+// };
+
+const onChangeDistributionCenter = (newDistribution) => {
+
+  isDistributionClick.value = false
+  console.log({ newDistribution })
+  if (newDistribution && coordinates.some(coordinate => coordinate.includes(newDistribution.center_name))) {
+    coordinates = [];
+  } else {
+    coordinates[0] = newDistribution.center_name + "|" + newDistribution.longitude + '|' + newDistribution.latitude
+
+  }
+  console.log({ coordinates })
 
   sendRequest();
 };
@@ -598,23 +714,32 @@ const onChangeDistance = (newDistance) => {
 const sendRequest = () => {
   const requestData = {};
 
-  if (locations && locations.length > 0) {
-    const filteredCoordinates = geoMap
-      .filter(location => locations.includes(location.value))
-      .map(location => location.value + "|" + location.longitude + '|' + location.latitude);
+  // if (locations && locations.length > 0) {
+  //   // const filteredCoordinates = geoMap
+  //   //   .filter(location => locations.includes(location.value))
+  //   //   .map(location => location.value + "|" + location.longitude + '|' + location.latitude);
 
-    requestData.locations = locations;
-    requestData.filteredCoordinates = filteredCoordinates;
-  }
+  //   requestData.locations = locations;
+  //   // requestData.filteredCoordinates = filteredCoordinates;
+  // }
 
-  if (distance !== null && distance !== undefined) {
+  if (distance !== null && distance !== '' && coordinates !== undefined && coordinates.length > 0) {
+    requestData.filteredCoordinates = coordinates;
     requestData.distance = distance;
   }
+
+  console.log({requestData})
 
   if (Object.keys(requestData).length > 0) {
     router.visit(route("admin.seo.pages"), {
       method: "get",
       data: requestData,
+      replace: true,
+    });
+  } else if(distanceProps && coordinatesProps && !distance && !coordinates.length) {
+    router.visit(route("admin.seo.pages"), {
+      method: "get",
+      // data: requestData,
       replace: true,
     });
   }
